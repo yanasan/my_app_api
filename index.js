@@ -1,5 +1,6 @@
 // 必要なモジュールの読み込み
 const express = require('express');
+const cors = require('cors');
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
 const winston = require('winston');  // ログのためにwinstonを使用
@@ -22,6 +23,11 @@ const pool = new Pool({
 
 // Expressアプリケーションの設定
 const app = express();
+app.use(cors({
+  origin: '*', //アクセス許可するオリジン
+  credentials: true, //レスポンスヘッダーにAccess-Control-Allow-Credentials追加
+  optionsSuccessStatus: 200 //レスポンスstatusを200に設定
+}))
 app.use(express.json());  // JSONのリクエストボディをパース
 
 // ログ設定 (Winston)
